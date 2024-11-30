@@ -1,1 +1,1 @@
-# template-api-ts
+# API-SCHOOL-TS

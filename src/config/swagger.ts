@@ -5,7 +5,7 @@ const swaggerOptions = {
     swaggerDefinition: {
         openapi: "3.0.0",
         info: {
-            title: "API Documentation",
+            title: "API Documentation API-SCHOOL-TS",
             version: "1.0.0",
             description: "API for managing users"
         },
