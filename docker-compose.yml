@@ -1,0 +1,47 @@
+services:
+    backend:
+        container_name: ${APP_NAME}
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        image: ${APP_NAME}
+        ports:
+            - ${PORT}:${PORT}
+        env_file:
+            - .env
+        depends_on:
+            - mysql
+        platform: linux/x86_64
+        restart: always
+        networks:
+            - web-net
+        volumes:
+            - ./src:/app/src
+            - /node_modules
+        command: npm run dev
+        environment:
+            - DB_HOST=${DB_HOST}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_NAME=${DB_NAME}
+            - NODE_ENV=${NODE_ENV}
+    mysql:
+        image: mysql:latest
+        container_name: ${APP_NAME}_mysql
+        restart: always
+        networks:
+            - web-net
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_NAME}
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+
+volumes:
+    data: {}
+    mysql_data: {}
+networks:
+    web-net:
+        name: web-net
